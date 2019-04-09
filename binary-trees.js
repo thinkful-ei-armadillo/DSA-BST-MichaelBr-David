@@ -302,6 +302,9 @@ function isBalanced(t){
 }
 
 function sameBST(arr, arr2){
+  if(!arr.length && !arr2.length){ // We were missing this one case
+    return true;
+  }
   if(arr[0] !== arr2[0] || arr.length !== arr2.length){
     return false;
   }
@@ -309,11 +312,11 @@ function sameBST(arr, arr2){
     return true;
   }
 
-  let root = arr[0]; // 3       // 6
-  let rArr1 = [];    // [6,4,5] // []
-  let lArr1 = [];    // [1,0,2] // [4,5]
-  let rArr2 = [];    // [6,4,5] // []
-  let lArr2 = [];    // [1,2,0] // [1,2,0]
+  let root = arr[0];
+  let rArr1 = [];
+  let lArr1 = [];
+  let rArr2 = [];
+  let lArr2 = [];
   for(let i = 1; i < arr.length; i++){
     if(arr[i] > root){
       rArr1.push(arr[i]);
@@ -328,64 +331,30 @@ function sameBST(arr, arr2){
       lArr2.push(arr2[i]);
     }
   }
-  if(rArr1.length && rArr2.length){
-    return sameBST(rArr1, rArr2);
-  }
-  if(lArr1.length && lArr2.length){
-    return sameBST(rArr1, rArr2);
-  }
-  return true;
+  return sameBST(rArr1, rArr2) && sameBST(lArr1, lArr2);
 }
-
-console.log(sameBST([3, 5, 4, 6, 1, 0, 2], [3, 1, 5, 2, 4, 6, 0])); // orig input - true
-console.log(sameBST([3, 6, 4, 5, 1, 0, 2], [3, 1, 5, 2, 4, 6, 0])); // swap 5/6 arr - false
-console.log(sameBST([3, 6, 4, 5, 1, 0, 2], [3, 1, 6, 2, 4, 5, 0])); // max call stack?
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// function sameBST(arr, arr2){
-//   if(arr[0] !== arr2[0] || arr.length !== arr2.length){
-//     return false;
-//   }
-//   if(arr.length === 1 && arr2.length === 1){
-//     return true;
-//   }
-
-//   let root = arr[0]; // 3       // 6
-//   let rArr1 = [];    // [6,4,5] // []
-//   let lArr1 = [];    // [1,0,2] // [4,5]
-//   let rArr2 = [];    // [6,4,5] // []
-//   let lArr2 = [];    // [1,2,0] // [1,2,0]
-//   for(let i = 1; i < arr.length; i++){
-//     if(arr[i] > root){
-//       rArr1.push(arr[i]);
-//     }
-//     else{
-//       lArr1.push(arr[i]);
-//     }
-//     if(arr2[i] > root){
-//       rArr2.push(arr2[i]);
-//     }
-//     else{
-//       lArr2.push(arr2[i]);
-//     }
-//   }
-//   return sameBST(rArr1, rArr2) && sameBST(lArr1, lArr2);
-// }
 
 // console.log(sameBST([3, 5, 4, 6, 1, 0, 2], [3, 1, 5, 2, 4, 6, 0])); // orig input - true
 // console.log(sameBST([3, 6, 4, 5, 1, 0, 2], [3, 1, 5, 2, 4, 6, 0])); // swap 5/6 arr - false
-// console.log(sameBST([3, 6, 4, 5, 1, 0, 2], [3, 1, 6, 2, 4, 5, 0])); // max call stack?
+// console.log(sameBST([3, 6, 4, 5, 1, 0, 2], [3, 1, 6, 2, 4, 5, 0])); 
+
+// showing trees from two arrays from last of three console logs above
+show_tree(tree([3, 6, 4, 5, 1, 0, 2]));
+console.log("------------------");
+show_tree(tree([3, 1, 5, 2, 4, 6, 0]));
+
+// builds tree from array
+function tree(arr){
+  const tree = new BinarySearchTree();
+  for(let i=0; i < arr.length; i++){
+    tree.insert(arr[i]);
+  }
+  return tree;
+}
+
+// prints tree in console, root on left
+function show_tree(t, p="") {
+  if (t.left) show_tree(t.left, p + "  ");
+  console.log(p + t.key);
+  if (t.right) show_tree(t.right, p + "  ");
+}
