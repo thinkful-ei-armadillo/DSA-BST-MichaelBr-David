@@ -2,58 +2,58 @@
 
 /*
                     3
-                  /   \
-                1      4
-                  \       \
-                  2      6
-                        /  \
-                        5    9
-                        \
-                          7
-                    */
+                   / \
+                  1   4
+                   \   \
+                    2   6
+                       / \
+                      5   9
+                       \
+                        7
+*/
 
 /*
                           E
-                        /   \
-                      A      E 
+                         / \
+                        A    E 
                               \
-                              S
-                            /   \
-                          I      S
-                            \   / \
-                            O  Q   Y
-                          /       /
-                        N       U
-                              /
-                            T
+                               S
+                              / \____
+                             I       S
+                              \     / \
+                               O   Q   Y
+                              /   /
+                             N   U
+                                /
+                               T
 */
 
 /*
                     2
-                  /   \
-                1      4
-                        \
+                   / \
+                  1   4
+                       \
                         6
-                        / \
-                        5   9
-                        \
-                          7
-                    */
+                       / \
+                      5   9
+                       \
+                         7
+*/
 
 /*
                           A
-                            \
+                           \
                             E 
-                              \
+                             \
                               S
-                            /   \
-                          I      S
-                            \   / \
-                            O  Q   Y
-                          /       /
-                        N       U
-                              /
-                            T
+                             / \
+                            I   S__
+                             \    / \
+                              O  Q   Y
+                             /       /
+                            N       U
+                                   /
+                                  T
 */
 
 class BinarySearchTree {
@@ -179,6 +179,19 @@ function mainNum(){
   BST.insert(2);
   BST.insert(5);
   BST.insert(7);
+  BST.insert(10);
+  BST.insert(11);
+  BST.insert(0);
+  BST.insert(-1);
+  BST.insert(-2);
+  BST.insert(-3);
+  BST.insert(-4);
+  BST.insert(-5);
+  BST.insert(-6);
+  BST.insert(-7);
+  BST.insert(-8);
+  BST.insert(-9);
+  BST.insert(-10);
   return BST;
 }
 
@@ -199,4 +212,69 @@ function mainStr(){
   return BST;
 }
 
-console.log(mainStr());
+// 4
+// This function adds all the values of the tree together.
+// Runtime: O(n)
+function tree(t){
+  if(!t){
+      return 0;
+  }
+  return tree(t.left) + t.value + tree(t.right)
+}
+
+//5
+// Time complexity: O(n)
+function height(t){
+  if(!t.left && !t.right){
+    return 1;
+  }
+  else if(t.left && !t.right){
+    return height(t.left) + 1;
+  }
+  else if(!t.left && t.right){
+    return height(t.right) + 1;
+  }
+  else{
+    if(height(t.left) > height(t.right)){
+      return height(t.left) + 1;
+    }
+    if(height(t.left) < height(t.right)){
+      return height(t.right) + 1;
+    }
+    if(height(t.left) === height(t.right)){
+      return height(t.left) + 1;
+    }
+  }
+}
+
+// console.log(height(mainNum()));
+
+//6
+function bstCheck(t){
+  if(t.left > t || t.left > t.right){
+    return false;
+  }
+  if(t.right < t || t.right < t.left){
+    return false;
+  }
+  if(!t.left && !t.right){
+    if(!t.parent){
+      return false;
+    }
+    else return;
+  }
+  if(t.left){
+    bstCheck(t.left);
+  }
+  if(t.right){
+    bstCheck(t.right);
+  }
+  return true;
+}
+
+// console.log(bstCheck(mainNum()));
+
+//7
+function thirdLargest(t){
+  //
+}
