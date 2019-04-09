@@ -305,20 +305,32 @@ function sameBST(arr, arr2){
   if(arr[0] !== arr2[0] || arr.length !== arr2.length){
     return false;
   }
+  if(arr.length === 1 && arr2.length === 1){
+    return true;
+  }
 
-  
-
-  for(let i =1; i < arr.length-1; i ++){
-    if (arr[i] < arr[i + 1] === arr2[i] < arr2[i+1]){
-      return false;
+  let root = arr[0]; // 3       // 6
+  let rArr1 = [];    // [6,4,5] // []
+  let lArr1 = [];    // [1,0,2] // [4,5]
+  let rArr2 = [];    // [6,4,5] // []
+  let lArr2 = [];    // [1,2,0] // [1,2,0]
+  for(let i = 1; i < arr.length; i++){
+    if(arr[i] > root){
+      rArr1.push(arr[i]);
+    }
+    else{
+      lArr1.push(arr[i]);
+    }
+    if(arr2[i] > root){
+      rArr2.push(arr2[i]);
+    }
+    else{
+      lArr2.push(arr2[i]);
     }
   }
-  // for(let i =1; i < arr.length-1; i ++){
-  //   if (arr[i] < arr[i + 1] === arr2[i] < arr2[i+1]){
-  //     return false;
-  //   }
-  // }
-  return true;
+  return sameBST(rArr1, rArr2) && sameBST(lArr1, lArr2);
 }
 
-console.log(sameBST([3, 5, 4, 6, 1, 0, 2], [3, 1, 5, 2, 4, 6, 0]));
+console.log(sameBST([3, 5, 4, 6, 1, 0, 2], [3, 1, 5, 2, 4, 6, 0])); // orig input - true
+console.log(sameBST([3, 6, 4, 5, 1, 0, 2], [3, 1, 5, 2, 4, 6, 0])); // swap 5/6 arr - false
+console.log(sameBST([3, 6, 4, 5, 1, 0, 2], [3, 1, 6, 2, 4, 5, 0])); // max call stack?
