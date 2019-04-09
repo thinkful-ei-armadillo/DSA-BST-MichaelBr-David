@@ -224,9 +224,9 @@ function mainStr(){
 // Runtime: O(n)
 function tree(t){
   if(!t){
-      return 0;
+    return 0;
   }
-  return tree(t.left) + t.value + tree(t.right)
+  return tree(t.left) + t.value + tree(t.right);
 }
 
 //5
@@ -289,3 +289,36 @@ function thirdLargest(t){
   return t._findMax().key;
 }
 
+function isBalanced(t){
+  // At each split, check the height of each branch. If the difference is greater than 1, return false. Else return true; 
+  if(t.left && t.right){
+    if(height(t.left) - height(t.right > 1) || height(t.right) - height(t.left) > 1){
+      return false;
+    }
+    isBalanced(t.left);
+    isBalanced(t.right);
+  }
+  return true;
+}
+
+function sameBST(arr, arr2){
+  if(arr[0] !== arr2[0] || arr.length !== arr2.length){
+    return false;
+  }
+
+  
+
+  for(let i =1; i < arr.length-1; i ++){
+    if (arr[i] < arr[i + 1] === arr2[i] < arr2[i+1]){
+      return false;
+    }
+  }
+  // for(let i =1; i < arr.length-1; i ++){
+  //   if (arr[i] < arr[i + 1] === arr2[i] < arr2[i+1]){
+  //     return false;
+  //   }
+  // }
+  return true;
+}
+
+console.log(sameBST([3, 5, 4, 6, 1, 0, 2], [3, 1, 5, 2, 4, 6, 0]));
