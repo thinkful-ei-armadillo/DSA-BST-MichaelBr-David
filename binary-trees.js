@@ -167,6 +167,13 @@ class BinarySearchTree {
     }
     return this.left._findMin();
   }
+
+  _findMax() {
+    if (!this.right) {
+      return this;
+    }
+    return this.right._findMax();
+  }
 }
 
 function mainNum(){
@@ -275,6 +282,10 @@ function bstCheck(t){
 // console.log(bstCheck(mainNum()));
 
 //7
+// this is stupid but it works ¯\_(ツ)_/¯ 
 function thirdLargest(t){
-  //
+  t.remove(t._findMax().key);
+  t.remove(t._findMax().key);
+  return t._findMax().key;
 }
+
